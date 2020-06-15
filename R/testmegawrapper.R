@@ -43,7 +43,7 @@ runMega <- function(analysis_file,data_file,out_prefix="mega_out",calib_file="",
       max_fileno = max(max_fileno,getFileNo(f,prefix))
     }
     return(max_fileno+1)
-
+    
   }
   
   getOutFiles <- function(run_prefix) {
@@ -52,7 +52,14 @@ runMega <- function(analysis_file,data_file,out_prefix="mega_out",calib_file="",
     for (f in files) {
       is_summary = attr(regexpr('summary\\.txt',f),'match.length')
       if (is_summary == -1) {
-        out_files = append(out_files,f)
+        file_suffix = substr(f,nchar(run_prefix)+2,100000)
+        print(file_suffix)
+        #out_files[[file_suffix]] = f
+        ftds = fileToDataStructure(f)
+        if (!is.null(ftds)) {
+          out_files[[file_suffix]] = fileToDataStructure(f)
+        }
+        #out_files = append(out_files,f)
       }
     }
     return(out_files)
@@ -60,6 +67,7 @@ runMega <- function(analysis_file,data_file,out_prefix="mega_out",calib_file="",
   
   fileToDataStructure <- function(filename) {
     ss = strsplit(filename,"\\.")
+    print(filename)
     file_ext = ss[[1]][length(ss[[1]])]
     if (file_ext == "csv") {
       ret = read.csv(filename,row.names=1)
@@ -68,7 +76,8 @@ runMega <- function(analysis_file,data_file,out_prefix="mega_out",calib_file="",
     } else if(file_ext == 'tre') {
       ret = read.nexus(filename)
     } else {
-      ret = read.table(filename,sep="\t")
+      #ret = read.table(filename,sep="\t")
+      ret = NULL
     }
     return(ret)
   }
@@ -87,16 +96,7 @@ runMega <- function(analysis_file,data_file,out_prefix="mega_out",calib_file="",
   }
   system2(getMegaName(),args=cmd_string)
   out_files = getOutFiles(run_prefix)
-  if (length(out_files) == 1) {
-    return(fileToDataStructure(out_files[[1]][1]))
-  } else {
-    out_objects = list()
-    for (f in out_files) {
-      out_objects = append(out_objects,fileToDataStructure(f))
-    }
-  }
-  out_list = list(out_objects,out_files)
-  return(out_list)
+  return(out_files)
 }
 
 
