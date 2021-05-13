@@ -1,6 +1,5 @@
-## 
-MEGA-R Wrapper
-##
+## MEGA-R Wrapper
+
 
 #### Installation
 
