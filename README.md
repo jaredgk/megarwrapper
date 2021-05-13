@@ -10,5 +10,6 @@ To load the package into R, run the following commands:
 
 ```R
 install.packages("devtools")
+devtools::install_github("jaredgk/megarwrapper")
 ```
 
