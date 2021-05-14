@@ -15,7 +15,7 @@
 #' 
 #' 
 
-runMegaOnData <- function(data,analysis_file,data_ext="",calib_file="",groups_file="",tree_file="",out_prefix="mega_out_",temp_prefix="mega_temp",keep_input=FALSE) {
+runMegaOnData <- function(data,analysis_file,data_ext="",calib_file="",groups_file="",tree_file="",out_prefix="mega_out_",temp_input_prefix="mega_temp",keep_input=FALSE) {
   if (nchar(data_ext) == 0) {
     if (class(data) == 'DNAbin') { data_ext = 'fasta' }
     else if (class(data) == 'phylo') { data_ext = 'nwk' }
@@ -23,7 +23,7 @@ runMegaOnData <- function(data,analysis_file,data_ext="",calib_file="",groups_fi
   if (!is.element(data_ext,c("fasta","nwk"))) {
     stop("Input MEGA file format not supported, must be fasta or nwk")
   }
-  temp_fn = paste(temp_prefix,'.',data_ext,sep="")
+  temp_fn = paste(temp_input_prefix,'.',data_ext,sep="")
   print(temp_fn)
   if (data_ext == 'fasta') {
     write.FASTA(data,temp_fn)
