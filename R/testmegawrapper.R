@@ -38,7 +38,6 @@ runMega <- function(analysis_file,data_file,out_prefix="mega_out",calib_file="",
   
   getNextFileNo <- function(prefix) {
     files = list.files(pattern=paste(prefix,'.*summary\\.txt',sep=''))
-    print(files)
     max_fileno = 0
     for (f in files) {
       max_fileno = max(max_fileno,getFileNo(f,prefix))
