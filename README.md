@@ -13,3 +13,20 @@ install.packages("devtools")
 devtools::install_github("jaredgk/megarwrapper")
 ```
 
+#### Usage
+Currently, R-MEGA provides two functions: runMega and runMegaOnData, each with the following arguments:
+
+##### Required
+* analysis_file: Path to MEGA Analysis Options file
+* data_file/data: For runMega, name of input data file. For runMegaOnData, either a DNAbin object (FASTA sequence from APE) or phylo object (newick tree from APE)
+
+##### Optional
+* calib_file: Path to file with calibrations for timetree/reltime analysis
+* groups_file: Path to file with group definitions for taxons
+* tree_file: Path to newick tree file
+* out_prefix: Prefix to use for temporary output files
+* temp_input_prefix: Prefix to use for filename for input data
+* keep_input: If true, will delete temporary input file after analysis completes
+
+#### Output
+Will return a named list where names are the file extension of the output MEGA file, and the values are the data stored in those files. CSV and trees (nwk/tre) will be read in to their apporopriate data structure.
